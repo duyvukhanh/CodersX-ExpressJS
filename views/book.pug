@@ -1,0 +1,30 @@
+extends ./layout/common.pug
+
+block content
+    h1 Book List 
+
+    hr
+
+
+    form(action="/books/create", method="POST")
+        label Book Name
+        span &nbsp;
+        input(type="text", name="name", class="form-control")
+        br
+        label Book Description
+        span &nbsp;
+        input(type="text", name="des", class="form-control")
+        br
+        button(class="btn btn-primary ml-2") Add
+        
+    hr
+    table.table
+        tr
+            th Book Title
+            th Actions
+        each book in books
+            tr
+                td= book.name
+                td
+                    a.btn.btn-light(href="/books/" + book.id + "/update") Update
+                    a.btn.btn-light(href="/books/" + book.id + "/delete") Delete

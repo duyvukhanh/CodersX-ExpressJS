@@ -1,0 +1,39 @@
+extends ./layout/common.pug
+
+block content     
+    h1 User List 
+
+    hr
+
+
+    form(action="/users/create", method="POST")
+        label User Name
+        span &nbsp;
+        input(type="text", name="name", class="form-control")
+        br
+        label Password
+        span &nbsp;
+        input(type="text", name="password",class="form-control")
+        br
+        label Phone Number
+        span &nbsp;
+        input(type="text", name="phoneNumber",class="form-control")
+        br
+        button(class="btn btn-primary ml-2") Add
+        
+    hr
+
+    table.table
+        tr
+            th Name
+            th Phone
+            th Actions
+        each user in users
+            tr
+                td= user.name
+                td= user.phoneNumber
+                td
+                    a.btn.btn-light(href="/users/" + user.id + "/update") Update
+                    a.btn.btn-light(href="/users/" + user.id + "/delete") Delete
+
+

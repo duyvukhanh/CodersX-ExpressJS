@@ -1,0 +1,9 @@
+extends ./layout/common.pug
+
+block content
+    h1 Book update
+    form(action="/books/" + book.id + "/update", method="POST")
+        br
+        label Book Title
+        input(type="text", name="newName", value=book.name , class="form-control")
+        button(class="btn btn-primary ml-2 mt-2") update

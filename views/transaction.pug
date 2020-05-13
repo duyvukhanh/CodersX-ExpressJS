@@ -1,0 +1,43 @@
+extends ./layout/common.pug
+
+block content
+
+    h1 Transaction List 
+
+    hr
+
+
+    form(action="/transactions/create", method="POST")
+        label User Name
+        span &nbsp;
+        select(name="userName")
+            each user in users
+                option= user.name
+        br
+        label Book name
+        span &nbsp;
+        select(name="bookName")
+            each book in books
+                option= book.name
+        br
+        button(class="btn btn-primary ml-2 mt-2") Add
+        
+    hr
+
+    
+
+    table.table
+        tr
+            th User Name
+            th Book Title
+            th Actions
+        each transaction in transactions
+            tr
+                td= transaction.userName
+                td= transaction.bookName
+                td
+                    unless transaction.isComplete 
+                        a.btn.btn-light(href="/transactions/" + transaction.id + "/complete") Complete
+                    else
+                        span.text-success Completed
+                    

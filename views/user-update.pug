@@ -1,0 +1,18 @@
+extends ./layout/common.pug
+
+block content
+    h1 User update
+    form(action="/users/" + user.id + "/update", method="POST")
+        label Username
+        span &nbsp;
+        input(type="text", name="newUserName", value=user.name, class="form-control")
+        br
+        label Password
+        span &nbsp;
+        input(type="text", name="newPassword", value=user.password, class="form-control")
+        br
+        label Phone Number
+        span &nbsp;
+        input(type="text", name="newPhoneNumber", value=user.phoneNumber, class="form-control")
+        br
+        button(class="btn btn-primary ml-2") update

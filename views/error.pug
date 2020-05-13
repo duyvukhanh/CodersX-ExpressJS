@@ -1,0 +1,5 @@
+extends ./layout/common.pug
+
+block content
+    each error in errors
+        .alert.alert-danger= error
