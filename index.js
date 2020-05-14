@@ -8,10 +8,15 @@ const app = express();
 const bodyParser = require("body-parser");
 const db = require('./db')
 const shortid = require("shortid");
+
 const bookRoute = require("./routes/book.route")
 const userRoute = require("./routes/user.route")
+const loginRoute = require("./routes/login.route")
+
 const transactionRoute = require("./routes/transactions.route")
 const cookieParser = require('cookie-parser')
+const authRequired = require('./middlewares/auth')
+const isAdmin = require('./middlewares/isAdmin')
 
 
 app.use(express.json()); // for parsing application/json
@@ -27,9 +32,20 @@ app.get("/", (req, res) => {
   res.render("index", {})
 });
 
-app.use('/books', bookRoute)
-app.use('/users', userRoute)
-app.use('/transactions', transactionRoute)
+
+app.get("/cookie", (req, res) => {
+  let count =  parseInt(req.cookies.cookie)
+  count ++
+  res.cookie('cookie',count)
+  console.log(req.cookies)
+  res.send("Cookie counted in console")
+});
+
+
+app.use('/books',authRequired.requireAuth, isAdmin.isAdmin, bookRoute)
+app.use('/users',authRequired.requireAuth, isAdmin.isAdmin, userRoute)
+app.use('/transactions',authRequired.requireAuth,  isAdmin.isAdmin, transactionRoute)
+app.use('/login', isAdmin.isAdmin, loginRoute)
 
 
 app.listen(8080, () => {
