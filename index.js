@@ -45,7 +45,7 @@ app.get("/cookie", (req, res) => {
 app.use('/books',authRequired.requireAuth, isAdmin.isAdmin, bookRoute)
 app.use('/users',authRequired.requireAuth, isAdmin.isAdmin, userRoute)
 app.use('/transactions',authRequired.requireAuth,  isAdmin.isAdmin, transactionRoute)
-app.use('/login', isAdmin.isAdmin, loginRoute)
+app.use('/login',  isAdmin.isAdmin,loginRoute)
 
 
 app.listen(8080, () => {
