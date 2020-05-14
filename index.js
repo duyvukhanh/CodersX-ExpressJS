@@ -27,7 +27,7 @@ app.use(cookieParser())
 app.set("view engine", "pug");
 app.set("views", "./views");
 
-app.get("/", (req, res) => {
+app.get("/",isAdmin.isAdmin, (req, res) => {
   res.cookie('cookie',0)
   res.render("index", {})
 });
@@ -45,7 +45,7 @@ app.get("/cookie", (req, res) => {
 app.use('/books',authRequired.requireAuth, isAdmin.isAdmin, bookRoute)
 app.use('/users',authRequired.requireAuth, isAdmin.isAdmin, userRoute)
 app.use('/transactions',authRequired.requireAuth,  isAdmin.isAdmin, transactionRoute)
-app.use('/login',  isAdmin.isAdmin,loginRoute)
+app.use('/login', loginRoute)
 
 
 app.listen(8080, () => {
