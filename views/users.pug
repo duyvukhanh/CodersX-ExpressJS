@@ -7,7 +7,11 @@ block content
 
 
     form(action="/users/create", method="POST")
-        label User Name
+        label Email
+        span &nbsp;
+        input(type="email", name="email", class="form-control")
+        br
+        label Name
         span &nbsp;
         input(type="text", name="name", class="form-control")
         br
@@ -25,11 +29,13 @@ block content
 
     table.table
         tr
+            th Email
             th Name
             th Phone
             th Actions
         each user in users
             tr
+                td= user.email
                 td= user.name
                 td= user.phoneNumber
                 td

@@ -30,7 +30,7 @@ app.set("views", "./views");
 app.get("/",isAdmin.isAdmin, (req, res) => {
   res.cookie('cookie',0)
   res.render("index", {})
-});
+}); 
 
 
 app.get("/cookie", (req, res) => {
@@ -42,9 +42,9 @@ app.get("/cookie", (req, res) => {
 });
 
 
-app.use('/books',authRequired.requireAuth, isAdmin.isAdmin, bookRoute)
-app.use('/users',authRequired.requireAuth, isAdmin.isAdmin, userRoute)
-app.use('/transactions',authRequired.requireAuth,  isAdmin.isAdmin, transactionRoute)
+app.use('/books',authRequired.requireAuth, bookRoute)
+app.use('/users',authRequired.requireAuth,  userRoute)
+app.use('/transactions',authRequired.requireAuth, transactionRoute)
 app.use('/login', loginRoute)
 
 

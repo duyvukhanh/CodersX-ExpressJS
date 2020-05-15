@@ -5,26 +5,22 @@ block content
     h1 Transaction List 
 
     hr
-
-
-    form(action="/transactions/create", method="POST")
-        label User Name
-        span &nbsp;
-        select(name="userName")
-            each user in users
-                option= user.name
-        br
-        label Book name
-        span &nbsp;
-        select(name="bookName")
-            each book in books
-                option= book.name
-        br
-        button(class="btn btn-primary ml-2 mt-2") Add
-        
-    hr
-
-    
+    if isAdmin
+        form(action="/transactions/create", method="POST")
+            label User Name
+            span &nbsp;
+            select(name="userName")
+                each user in users
+                    option= user.name
+            br
+            label Book name
+            span &nbsp;
+            select(name="bookName")
+                each book in books
+                    option= book.name
+            br
+            button(class="btn btn-primary ml-2 mt-2") Add
+        hr
 
     table.table
         tr

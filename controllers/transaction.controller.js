@@ -1,28 +1,59 @@
 const db = require('../db')
 const shortid = require('shortid')
 
-module.exports.index = function(req, res) {
-  let transactions = db.get("transactions").value()
+module.exports.index = function (req, res) {
+  let user = db.get("users").find({ id: req.cookies.userId }).value()
   let transactionsTransform = []
-  for  (let transaction of transactions) {
-    let transactionTransform = {}
-    let userName = db.get("users").find({ id: transaction.userId }).value().name;
-    let bookName = db.get("books").find({ id: transaction.bookId }).value().name;
-    let transactionStatus = transaction.isComplete
-    transactionTransform.id = transaction.id
-    transactionTransform.userName = userName
-    transactionTransform.bookName = bookName
-    transactionTransform.isComplete = transactionStatus
-    transactionsTransform.push(transactionTransform)
+
+  if (user.isAdmin) {
+    let transactions = db.get("transactions").value()
+    for (let transaction of transactions) {
+      let transactionTransform = {}
+      let userName = db.get("users").find({ id: transaction.userId }).value().name;
+      let bookName = db.get("books").find({ id: transaction.bookId }).value().name;
+      let transactionStatus = transaction.isComplete
+      transactionTransform.id = transaction.id
+      transactionTransform.userName = userName
+      transactionTransform.bookName = bookName
+      transactionTransform.isComplete = transactionStatus
+      transactionsTransform.push(transactionTransform)
+    }
+    res.render("transaction", {
+      users: db.get("users").value(),
+      books: db.get("books").value(),
+      transactions: transactionsTransform,
+      isAdmin : user.isAdmin
+    });
+    return
+  } else {
+    // let transactions = db.get("transactions").find({ userId: req.cookies.userId }).value()
+    let transactions = db.get("transactions").value()
+    for (let transaction of transactions) {
+      if (transaction.userId === user.id) {
+        let transactionTransform = {}
+        let userName = db.get("users").find({ id: transaction.userId }).value().name;
+        let bookName = db.get("books").find({ id: transaction.bookId }).value().name;
+        let transactionStatus = transaction.isComplete
+        transactionTransform.id = transaction.id
+        transactionTransform.userName = userName
+        transactionTransform.bookName = bookName
+        transactionTransform.isComplete = transactionStatus
+        transactionsTransform.push(transactionTransform)
+      }
+    }
+    res.render("transaction", {
+      users: db.get("users").value(),
+      books: db.get("books").value(),
+      transactions: transactionsTransform,
+      isAdmin : user.isAdmin
+    });
+    return
   }
-  res.render("transaction", {
-    users: db.get("users").value(),
-    books: db.get("books").value(),
-    transactions: transactionsTransform
-  });
+
+
 }
 
-module.exports.postCreate = function(req, res) {
+module.exports.postCreate = function (req, res) {
   let transactionsId = shortid.generate();
   let userName = req.body.userName;
   let bookName = req.body.bookName;
@@ -32,7 +63,7 @@ module.exports.postCreate = function(req, res) {
     id: transactionsId,
     userId: user.id,
     bookId: book.id,
-    isComplete : false
+    isComplete: false
   };
   db.get("transactions")
     .push(transaction)
@@ -40,7 +71,7 @@ module.exports.postCreate = function(req, res) {
   res.redirect("/transactions");
 }
 
-module.exports.complete = function(req, res) {
+module.exports.complete = function (req, res) {
   let id = req.params.id;
   let transactions = db.get('transactions')
   let errors = []
@@ -53,7 +84,7 @@ module.exports.complete = function(req, res) {
     }
   }
   if (isExist) {
-    transactions.find({ id: id }).assign({ isComplete : true }).write()
+    transactions.find({ id: id }).assign({ isComplete: true }).write()
     res.redirect("/transactions");
   } else {
     errors.push("ID khong ton tai")
@@ -61,5 +92,5 @@ module.exports.complete = function(req, res) {
       errors: errors
     });
   }
-  
+
 }

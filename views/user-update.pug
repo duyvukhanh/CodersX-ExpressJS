@@ -3,7 +3,11 @@ extends ./layout/common.pug
 block content
     h1 User update
     form(action="/users/" + user.id + "/update", method="POST")
-        label Username
+        label Email
+        span &nbsp;
+        input(type="email", name="newEmail", value=user.email, class="form-control")
+        br
+        label Name
         span &nbsp;
         input(type="text", name="newUserName", value=user.name, class="form-control")
         br
