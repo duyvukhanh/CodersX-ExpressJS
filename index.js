@@ -16,18 +16,18 @@ const loginRoute = require("./routes/login.route")
 const transactionRoute = require("./routes/transactions.route")
 const cookieParser = require('cookie-parser')
 const authRequired = require('./middlewares/auth')
-const isAdmin = require('./middlewares/isAdmin')
+
 
 
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 // our default array of dreams
 app.use(express.static('public'));
-app.use(cookieParser())
+app.use(cookieParser('chuoingaunhien'))
 app.set("view engine", "pug");
 app.set("views", "./views");
 
-app.get("/",isAdmin.isAdmin, (req, res) => {
+app.get("/", (req, res) => {
   res.cookie('cookie',0)
   res.render("index", {})
 }); 

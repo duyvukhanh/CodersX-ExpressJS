@@ -2,7 +2,7 @@ const db = require('../db')
 const shortid = require('shortid')
 
 module.exports.index = function (req, res) {
-    let user = db.get("users").find({ id: req.cookies.userId }).value()
+    let user = db.get("users").find({ id: req.signedCookies.userId }).value()
     res.render("book", {
         books: db.get('books').value(),
         isAdmin : user.isAdmin

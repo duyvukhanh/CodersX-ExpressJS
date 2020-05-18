@@ -1,27 +1,19 @@
 {
   "users": [
     {
-      "name": "duyvukhanh",
-      "password": "123456",
-      "id": "YwL7HxSeu",
-      "email": "duyvukhanh@gmail.com",
-      "phoneNumber": "0123132123",
-      "isAdmin": false
-    },
-    {
-      "name": "admin",
-      "password": "admin",
-      "id": "YwL7HxSxx",
-      "email": "admin@gmail.com",
-      "phoneNumber": "0213255544",
+      "email": "aaa@gmail.com",
+      "name": "los angeles",
+      "password": "$2a$10$RpMjMcQF1AdoNQCSvBFJi.99EyMAy1HUrxYkeVkvlzW1riiLWDSCy",
+      "phoneNumber": "0999999999",
+      "id": "StpAUTctV",
       "isAdmin": true
     },
     {
-      "email": "hoanghalc96@gmail.com",
-      "name": "Manh Ha Hoang",
-      "password": "123123",
-      "phoneNumber": "123123123",
-      "id": "WT8wNeM83",
+      "email": "duyvukhanh@gmail.com",
+      "name": "Duy",
+      "password": "$2a$10$vEh4fC5bzHYzOhsAlWypuOhAXE0sAWRh93mdhTrOM3o5cyXQpfevO",
+      "phoneNumber": "0123456",
+      "id": "89iVdSuas",
       "isAdmin": false
     }
   ],
@@ -42,18 +34,5 @@
       "id": "7OPHZrQlt"
     }
   ],
-  "transactions": [
-    {
-      "id": "stGQreZa5",
-      "userId": "YwL7HxSeu",
-      "bookId": "7OPHZrQlt",
-      "isComplete": true
-    },
-    {
-      "id": "2DW0iUxQB",
-      "userId": "YwL7HxSxx",
-      "bookId": "Wli3AEG5Q",
-      "isComplete": false
-    }
-  ]
+  "transactions": []
 }

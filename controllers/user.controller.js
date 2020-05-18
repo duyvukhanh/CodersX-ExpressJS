@@ -1,11 +1,14 @@
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
+
 const db = require('../db')
 const shortid = require('shortid')
 
 module.exports.index = function (req, res) {
-    let user = db.get("users").find({ id: req.cookies.userId }).value()
+    let user = db.get("users").find({ id: req.signedCookies.userId }).value()
     res.render("users", {
         users: db.get('users').value(),
-        isAdmin : user.isAdmin
+        isAdmin: user.isAdmin
     })
 }
 
@@ -17,9 +20,10 @@ module.exports.delete = function (req, res) {
 
 module.exports.update = function (req, res) {
     let id = req.params.id
+    let user = db.get('users').find({ id: id }).value()
     res.render("user-update", {
         user: db.get('users').find({ id: id }).value(),
-        isAdmin : user.isAdmin
+        isAdmin: user.isAdmin
     })
 }
 
@@ -41,6 +45,12 @@ module.exports.postUpdate = function (req, res) {
 module.exports.postCreate = function (req, res) {
     req.body.id = shortid.generate()
     req.body.isAdmin = false
-    db.get('users').push(req.body).write()
+    bcrypt.genSalt(10, function (err, salt) {
+        bcrypt.hash(req.body.password, salt, function (err, hash) {
+            req.body.password = hash
+            db.get('users').push(req.body).write()
+        });
+    });
+
     res.redirect('/users')
 }
